@@ -45,3 +45,17 @@ export async function getProjects() {
     }`
   );
 }
+
+export async function getSingleBlog(slug: string) {
+  return client.fetch(
+    groq`*[_type == "blog" && slug.current == $slug][0]{
+      _id,
+      title,
+      "slug": slug.current,
+      coverImage { alt, "image": asset->url },
+      content,
+      publishedAt
+    }`,
+    { slug }
+  );
+}

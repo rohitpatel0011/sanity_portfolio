@@ -1,26 +1,32 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f5ee; /* Light Yellow Gray from your style guide */
+  --foreground: #4a4a4a;
+  --primary: #afcb3e;    /* Green */
+  --highlight: #ecdc29;  /* Yellow */
+  --danger: #ce592b;     /* Red */
+  --glass: rgba(255, 255, 255, 0.4);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)] font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Liquid Glass Utility */
+.glass-effect {
+  @apply backdrop-blur-md bg-white/30 border border-white/20 shadow-lg;
+}
+
+/* Style Guide Buttons */
+.btn-liquid {
+  @apply relative inline-block px-6 py-2 rounded-lg font-bold transition-all duration-300 active:top-1;
+  background: var(--primary);
+  border-bottom: 4px solid #8ba331;
+}
+
+.btn-liquid:hover {
+  @apply brightness-110;
 }
