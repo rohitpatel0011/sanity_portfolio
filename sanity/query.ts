@@ -42,6 +42,7 @@ export async function getProjects() {
       "slug": slug.current,
       projectUrl,
       coverImage { alt, "image": asset->url },
+      description
     }`
   );
 }
@@ -55,6 +56,35 @@ export async function getSingleBlog(slug: string) {
       coverImage { alt, "image": asset->url },
       content,
       publishedAt
+    }`,
+    { slug }
+  );
+}
+
+// Fetch Related Blogs (except the current one)
+export async function getRelatedBlogs(slug: string) {
+  return client.fetch(
+    groq`*[_type == "blog" && slug.current != $slug] | order(publishedAt desc)[0...3]{
+      _id,
+      title,
+      "slug": slug.current,
+      coverImage { alt, "image": asset->url },
+      publishedAt
+    }`,
+    { slug }
+  );
+}
+
+// 4. Single Project Fetch Karne Ki Query
+export async function getSingleProject(slug: string) {
+  return client.fetch(
+    groq`*[_type == "project" && slug.current == $slug][0]{
+      _id,
+      name,
+      "slug": slug.current,
+      projectUrl,
+      coverImage { alt, "image": asset->url },
+      description
     }`,
     { slug }
   );
