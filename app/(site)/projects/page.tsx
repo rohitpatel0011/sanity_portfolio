@@ -11,9 +11,9 @@ export default async function ProjectsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project: any) => (
           <Link key={project._id} href={`/projects/${project.slug}`} className="block group">
-            <div className="glass border border-zinc-200 p-6 rounded-2xl hover:border-[var(--primary)] transition-all h-full flex flex-col">
+            <div className="glass border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl hover:border-[var(--primary)] dark:hover:border-[var(--primary)] transition-all h-full flex flex-col">
               {project.coverImage?.image ? (
-                <div className="relative w-full h-48 mb-6 rounded-xl overflow-hidden bg-zinc-100">
+                <div className="relative w-full h-48 mb-6 rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800/80">
                   <Image
                     src={project.coverImage.image}
                     alt={project.coverImage.alt || project.name}
@@ -22,13 +22,13 @@ export default async function ProjectsPage() {
                   />
                 </div>
               ) : (
-                <div className="relative w-full h-48 mb-6 rounded-xl bg-zinc-100 flex items-center justify-center">
+                <div className="relative w-full h-48 mb-6 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 flex items-center justify-center">
                   <span className="text-zinc-400">No Image</span>
                 </div>
               )}
               <h2 className="text-2xl font-bold mb-3 group-hover:text-[var(--primary)] transition-colors">{project.name}</h2>
               {/* If there's a description we can show a short preview, or just leave it for the single page */}
-              <p className="text-zinc-500 text-sm flex-grow line-clamp-3">
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm flex-grow line-clamp-3">
                  Click to view project details and visit the live site.
               </p>
 

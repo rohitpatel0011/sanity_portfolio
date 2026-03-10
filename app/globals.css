@@ -1,18 +1,32 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f6f5ee; /* Light Yellow Gray from your style guide */
-  --foreground: #4a4a4a;
   --primary: #afcb3e;    /* Green */
   --highlight: #ecdc29;  /* Yellow */
   --danger: #ce592b;     /* Red */
   --glass: rgba(255, 255, 255, 0.4);
+      --background: #f6f5ee; /* Light background */
+    --foreground: #4a4a4a; /* Light text */
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.4);
 }
 
-@layer base {
-  body {
-    @apply bg-[var(--background)] text-[var(--foreground)] font-sans;
-  }
+.dark {
+  /* NAYA: Dark Mode Variables */
+  --background: #121212; /* Dark background */
+  --foreground: #e5e5e5; /* Dark text */
+  --glass-bg: rgba(20, 20, 20, 0.6); /* Dark glass */
+  --glass-border: rgba(255, 255, 255, 0.05); /* Dark subtle border */
+}
+
+body {
+  /* background-color: var(--background); */
+  background: var(--background);
+  color: var(--foreground);
+  transition-property: color, background-color;
+  transition-duration: 500ms;
+  font-family: var(--font-sans), sans-serif;
 }
 
 /* Liquid Glass Utility */
@@ -46,4 +60,15 @@
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--primary); /* Hover par green/primary color ho jayega */
+}
+
+
+
+
+
+/* Glass class ko update karein taaki wo theme variables use kare */
+.glass {
+  @apply backdrop-blur-xl shadow-xl transition-colors duration-500;
+  background-color: var(--glass-bg);
+  border: 1px solid var(--glass-border);
 }

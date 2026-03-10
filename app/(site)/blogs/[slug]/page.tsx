@@ -64,7 +64,7 @@ export default async function BlogDetail({
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tighter mb-6">
           {blog.title}
         </h1>
-        <p className="text-xl text-zinc-500">{blog.excerpt}</p>
+        <p className="text-xl text-zinc-500 dark:text-zinc-400">{blog.excerpt}</p>
       </header>
 
       {/* Cover Image */}
@@ -84,7 +84,7 @@ export default async function BlogDetail({
       {/* items-start lagana zaroori hai tabhi sticky kaam karega */}
       <div className="flex flex-col lg:flex-row gap-12 relative items-start">
         {/* LEFT COLUMN: Main Content (Scrolls Normally) */}
-        <div className="w-full lg:w-[70%] text-zinc-800 max-w-none">
+        <div className="w-full lg:w-[70%] text-zinc-800 dark:text-zinc-200 max-w-none">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
@@ -94,7 +94,7 @@ export default async function BlogDetail({
                 return (
                   <h2
                     id={id}
-                    className="text-3xl font-bold mt-10 mb-4 pb-2 border-b border-zinc-200 scroll-mt-28">
+                    className="text-3xl font-bold mt-10 mb-4 pb-2 border-b border-zinc-200 dark:border-zinc-800 scroll-mt-28">
                     {children}
                   </h2>
                 );
@@ -113,7 +113,7 @@ export default async function BlogDetail({
               // ... Baaki purane tags (h1, p, ul, code, table) waise ke waise hi rahenge ...
               h1({ children }) {
                 return (
-                  <h1 className="text-4xl font-extrabold mt-12 mb-6 pb-2 border-b border-zinc-200">
+                  <h1 className="text-4xl font-extrabold mt-12 mb-6 pb-2 border-b border-zinc-200 dark:border-zinc-800">
                     {children}
                   </h1>
                 );
@@ -125,7 +125,7 @@ export default async function BlogDetail({
               },
               strong({ children }) {
                 return (
-                  <strong className="font-bold text-black">{children}</strong>
+                  <strong className="font-bold text-black dark:text-white">{children}</strong>
                 );
               },
               ul({ children }) {
@@ -147,7 +147,7 @@ export default async function BlogDetail({
               },
               blockquote({ children }) {
                 return (
-                  <blockquote className="border-l-4 border-[var(--primary)] pl-6 py-2 my-8 italic bg-white/50 rounded-r-xl shadow-sm text-zinc-600 text-lg">
+                  <blockquote className="border-l-4 border-[var(--primary)] pl-6 py-2 my-8 italic bg-white/50 dark:bg-zinc-800/50 rounded-r-xl shadow-sm text-zinc-600 dark:text-zinc-400 text-lg">
                     {children}
                   </blockquote>
                 );
@@ -199,7 +199,7 @@ export default async function BlogDetail({
                 return (
                   <code
                     {...props}
-                    className="bg-zinc-200 text-red-600 px-1.5 py-0.5 rounded-md font-mono text-sm border border-zinc-300">
+                    className="bg-zinc-200 dark:bg-zinc-800 text-red-600 dark:text-red-400 px-1.5 py-0.5 rounded-md font-mono text-sm border border-zinc-300 dark:border-zinc-700">
                     {children}
                   </code>
                 );
@@ -207,7 +207,7 @@ export default async function BlogDetail({
 
               table({ children }) {
                 return (
-                  <div className="overflow-x-auto my-10 bg-white/40 backdrop-blur-md rounded-xl p-1 border border-white/40 shadow-sm">
+                  <div className="overflow-x-auto my-10 bg-white/40 dark:bg-black/40 backdrop-blur-md rounded-xl p-1 border border-white/40 dark:border-white/10 shadow-sm">
                     <table className="w-full text-left border-collapse m-0">
                       {children}
                     </table>
@@ -216,20 +216,20 @@ export default async function BlogDetail({
               },
               th({ children }) {
                 return (
-                  <th className="p-4 bg-white/60 font-bold border-b border-zinc-300 text-zinc-900">
+                  <th className="p-4 bg-white/60 dark:bg-black/60 font-bold border-b border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100">
                     {children}
                   </th>
                 );
               },
               td({ children }) {
                 return (
-                  <td className="p-4 border-b border-zinc-200/60 text-zinc-700">
+                  <td className="p-4 border-b border-zinc-200/60 dark:border-zinc-700/60 text-zinc-700 dark:text-zinc-300">
                     {children}
                   </td>
                 );
               },
               hr() {
-                return <hr className="my-10 border-t border-zinc-300" />;
+                return <hr className="my-10 border-t border-zinc-300 dark:border-zinc-700" />;
               },
             }}>
             {blog.content}
@@ -237,7 +237,7 @@ export default async function BlogDetail({
         </div>
 
         {/* RIGHT COLUMN: Table of Contents (Fixed / Sticky) */}
-        <aside className="hidden lg:block w-[30%] sticky top-[50vh] -translate-y-1/2 h-fit">
+        <aside className="hidden lg:block w-[30%] sticky top-[20vh]  h-fit">
           <TableOfContents headings={headings} />
         </aside>
       </div>

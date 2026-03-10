@@ -30,7 +30,7 @@ export default async function Home() {
           {data.skills?.map((cat: any, i: number) => (
             <div key={i} className="glass p-6 rounded-2xl border border-white/20 hover:border-zinc-300 transition-all group">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-zinc-100 rounded-lg group-hover:bg-[var(--highlight)] transition-colors">
+                <div className="p-2 bg-zinc-100 dark:bg-zinc-800/80 rounded-lg group-hover:bg-[var(--highlight)] dark:group-hover:bg-[var(--highlight)] transition-colors">
                   {getIcon(cat.categoryName)}
                 </div>
                 <h4 className="font-bold text-lg">{cat.categoryName}</h4>
@@ -38,7 +38,7 @@ export default async function Home() {
 
               <div className="flex flex-wrap gap-2">
                 {cat.skillList.map((skill: string, j: number) => (
-                  <span key={j} className="text-sm font-medium py-1 px-3 bg-white/50 border border-zinc-200 rounded-full text-zinc-600">
+                  <span key={j} className="text-sm font-medium py-1 px-3 bg-white/50 dark:bg-black/30 border border-zinc-200 dark:border-zinc-700/50 rounded-full text-zinc-600 dark:text-zinc-300">
                     {skill}
                   </span>
                 ))}

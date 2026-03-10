@@ -33,9 +33,9 @@ export const RichTextComponents = {
       <div className="my-8 overflow-x-auto glass rounded-xl border border-white/20">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-zinc-100/50">
+            <tr className="bg-zinc-100/50 dark:bg-zinc-800/50">
               {value.rows[0].cells.map((cell: string, i: number) => (
-                <th key={i} className="p-4 font-bold border-b border-zinc-200">
+                <th key={i} className="p-4 font-bold border-b border-zinc-200 dark:border-zinc-700">
                   {cell}
                 </th>
               ))}
@@ -43,9 +43,9 @@ export const RichTextComponents = {
           </thead>
           <tbody>
             {value.rows.slice(1).map((row: any, i: number) => (
-              <tr key={i} className="hover:bg-white/30">
+              <tr key={i} className="hover:bg-white/30 dark:hover:bg-white/10 transition-colors">
                 {row.cells.map((cell: string, j: number) => (
-                  <td key={j} className="p-4 border-b border-zinc-100">
+                  <td key={j} className="p-4 border-b border-zinc-200 dark:border-zinc-800">
                     {cell}
                   </td>
                 ))}
@@ -63,7 +63,7 @@ export const RichTextComponents = {
       </h1>
     ),
     h2: ({ children }: any) => (
-      <h2 className="text-3xl font-bold mt-10 mb-4 border-b border-zinc-200 pb-2">
+      <h2 className="text-3xl font-bold mt-10 mb-4 border-b border-zinc-200 dark:border-zinc-800 pb-2">
         {children}
       </h2>
     ),
@@ -71,7 +71,7 @@ export const RichTextComponents = {
       <h3 className="text-xl font-bold mt-8 mb-2">{children}</h3>
     ),
     blockquote: ({ children }: any) => (
-      <blockquote className="border-l-4 border-[var(--primary)] pl-6 py-2 my-6 italic bg-zinc-50 rounded-r-lg">
+      <blockquote className="border-l-4 border-[var(--primary)] pl-6 py-2 my-6 italic bg-zinc-50 dark:bg-zinc-800/50 rounded-r-lg shadow-sm text-zinc-600 dark:text-zinc-400">
         {children}
       </blockquote>
     ),

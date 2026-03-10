@@ -11,7 +11,7 @@ export default async function BlogsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {blogs.map((blog: any) => (
           <Link key={blog._id} href={`/blogs/${blog.slug}`} className="block group">
-            <div className="glass border border-zinc-200 p-6 rounded-2xl hover:border-zinc-400 transition-all h-full flex flex-col">
+            <div className="glass border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl hover:border-zinc-400 dark:hover:border-zinc-500 transition-all h-full flex flex-col">
               {blog.coverImage?.image && (
                 <div className="relative w-full h-48 mb-6 rounded-xl overflow-hidden">
                   <Image
@@ -23,8 +23,8 @@ export default async function BlogsPage() {
                 </div>
               )}
               <h2 className="text-2xl font-bold mb-2 group-hover:text-[var(--highlight)] transition-colors">{blog.title}</h2>
-              <p className="text-zinc-500 mb-4 flex-grow">{blog.excerpt}</p>
-              <div className="text-sm font-medium text-zinc-400 mt-auto pt-4 border-t border-zinc-100">
+              <p className="text-zinc-500 dark:text-zinc-400 mb-4 flex-grow">{blog.excerpt}</p>
+              <div className="text-sm font-medium text-zinc-400 dark:text-zinc-500 mt-auto pt-4 border-t border-zinc-100 dark:border-zinc-800/50">
                 {new Date(blog.publishedAt).toLocaleDateString('en-US', {
                   month: 'short',
                   day: 'numeric',
