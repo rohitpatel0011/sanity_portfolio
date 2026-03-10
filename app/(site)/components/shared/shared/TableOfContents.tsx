@@ -63,4 +63,4 @@ export default function TableOfContents({ headings }: { headings: Heading[] }) {
       </ul>
     </div>
   );
-}\
+}
