@@ -11,7 +11,5 @@ const config: Config = {
   ],
   theme: {
     extend: {},
-  plugins: [
-    typography,
-]}};
+}};
 export default config;
