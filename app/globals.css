@@ -30,3 +30,20 @@
 .btn-liquid:hover {
   @apply brightness-110;
 }
+
+/* Table of Contents ke liye invisible scrollbar */
+/* Table of Contents ke liye Premium Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px; /* Patla scrollbar */
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2); /* Light dark thumb */
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--primary); /* Hover par green/primary color ho jayega */
+}

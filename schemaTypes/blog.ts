@@ -1,51 +1,48 @@
-// schemas/blog.ts
+/** @format */
+
+import { defineField, defineType } from "sanity";
 import { BiPen } from "react-icons/bi";
 
-const blog = {
+export default defineType({
   name: "blog",
   title: "Blog Post",
   type: "document",
   icon: BiPen,
   fields: [
-    {
+    defineField({
       name: "title",
       title: "Post Title",
       type: "string",
-      description: "Keep the title catchy!",
-    },
-    {
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
-      description: "URL ke liye slug (e.g., my-first-blog)",
-      options: { source: "title", maxLength: 96 }, // Title se automatically slug generate ho jayega
-    },
-    {
+      options: { source: "title" },
+    }),
+    defineField({
       name: "coverImage",
       title: "Cover Image",
       type: "image",
       options: { hotspot: true },
-    },
-    {
+    }),
+    defineField({
       name: "excerpt",
       title: "Excerpt",
       type: "text",
       rows: 3,
-      description: "Blog ka chhota sa summary jo list mein dikhega",
-    },
-    {
-      name: "content",
-      title: "Content",
-      type: "array", // Sanity ka rich text editor
-      of: [{ type: "block" }],
-      description: "Yahan apna poora blog likhein",
-    },
-    {
+    }),
+    defineField({
       name: "publishedAt",
       title: "Published At",
       type: "datetime",
-    },
+      initialValue: () => new Date().toISOString(),
+    }),
+    defineField({
+      name: "content",
+      title: "Content",
+      type: "markdown",
+      description: "Yahan apni puri post Markdown format me likhein.",
+    }),
   ],
-};
-
-export default blog;
+});
