@@ -32,6 +32,18 @@ export default function TableOfContents({ headings }: { headings: Heading[] }) {
     return () => observer.disconnect();
   }, [headings]);
 
+  // Scroll active item into view inside the TOC container
+  useEffect(() => {
+    if (activeId) {
+      const container = document.getElementById("toc-container");
+      const activeLink = document.getElementById(`toc-${activeId}`);
+      if (container && activeLink) {
+        const scrollPosition = activeLink.offsetTop - container.clientHeight / 2 + activeLink.clientHeight / 2;
+        container.scrollTo({ top: scrollPosition, behavior: 'smooth' });
+      }
+    }
+  }, [activeId]);
+
   if (headings.length === 0) {
     return <p className="text-sm text-zinc-500 dark:text-zinc-400 italic">No headings found.</p>;
   }
@@ -45,11 +57,19 @@ export default function TableOfContents({ headings }: { headings: Heading[] }) {
         On this page
       </h4>
       
-      <nav className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto custom-scrollbar pr-2">
+      <nav id="toc-container" className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto custom-scrollbar pr-2 relative">
         {headings.map((heading, idx) => (
           <a
             key={idx}
+            id={`toc-${heading.id}`}
             href={`#${heading.id}`}
+            onClick={(e) => {
+              e.preventDefault();
+              const el = document.getElementById(heading.id);
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
             className={`text-sm transition-all duration-300 relative ${
               heading.level === 3 ? 'ml-4' : ''
             } ${

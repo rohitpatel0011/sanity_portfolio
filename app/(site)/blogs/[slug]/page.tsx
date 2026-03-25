@@ -9,26 +9,45 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import TableOfContents from "../../components/global/TableOfContents";
 
 
-// URL ke liye id banane ka function (e.g., "Why API?" -> "why-api")
+// Custom slugify function
 const slugify = (text: string) => {
-  return text.toString().toLowerCase()
-    .replace(/\s+/g, '-')       // Spaces ko dash banaye
-    .replace(/[^\w\-]+/g, '')   // Special characters hataye
-    .replace(/\-\-+/g, '-')     // Multiple dashes ko single kare
-    .replace(/^-+/, '')         // Start se dash hataye
-    .replace(/-+$/, '');        // End se dash hataye
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-')
+    .replace(/^-+/, '')
+    .replace(/-+$/, '');
+};
+
+const extractChildrenText = (node: any): string => {
+  if (typeof node === 'string') return node;
+  if (typeof node === 'number') return node.toString();
+  if (Array.isArray(node)) return node.map(extractChildrenText).join('');
+  if (node && node.props && node.props.children) return extractChildrenText(node.props.children);
+  return '';
 };
 
 // Markdown text se saari h2 aur h3 nikalne ka function
+const cleanMarkdown = (text: string) => {
+  return text.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1').replace(/[*_~`]+/g, '');
+};
+
+
 const extractHeadings = (markdown: string) => {
   const regex = /^(##|###) (.*)$/gm;
   const headings = [];
   let match;
   while ((match = regex.exec(markdown)) !== null) {
+    const rawText = match[2];
+    const plainText = cleanMarkdown(rawText).trim();
+    if (!plainText) continue;
+    
     headings.push({
       level: match[1].length, // 2 for h2, 3 for h3
-      text: match[2],
-      id: slugify(match[2]),
+      text: plainText,
+      id: slugify(plainText),
     });
   }
   return headings;
@@ -54,30 +73,38 @@ export default async function BlogDetail({
 
   return (
     <article className="max-w-7xl mx-auto px-6 py-12">
-      {/* Blog Header (Full width) */}
-      <header className="mb-12 text-center max-w-3xl mx-auto">
-        <p className="text-[var(--primary)] font-bold text-sm uppercase tracking-widest mb-4">
-          {new Date(blog.publishedAt).toLocaleDateString("en-US", {
-            dateStyle: "long",
-          })}
-        </p>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tighter mb-6">
-          {blog.title}
-        </h1>
-        <p className="text-xl text-zinc-500 dark:text-zinc-400">{blog.excerpt}</p>
-      </header>
-
-      {/* Cover Image */}
-      {blog.coverImage && (
-        <div className="relative w-full h-[300px] md:h-[500px] mb-16 rounded-[2rem] overflow-hidden shadow-2xl border border-white/40 max-w-5xl mx-auto">
-          <Image
-            src={blog.coverImage.image}
-            alt={blog.title}
-            fill
-            className="object-cover"
-          />
+      {/* Blog Header & Cover Image Layout (Title Left, Image Right) */}
+      <header className="mb-16 flex flex-col-reverse lg:flex-row items-center gap-10">
+        {/* Left Side: Title & Info */}
+        <div className="w-full lg:w-1/2 text-left">
+          <p className="text-[var(--primary)] font-bold text-sm uppercase tracking-widest mb-4">
+            {new Date(blog.publishedAt).toLocaleDateString("en-US", {
+              dateStyle: "long",
+            })}
+          </p>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tighter mb-6">
+            {blog.title}
+          </h1>
+          <p className="text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-xl">
+            {blog.excerpt}
+          </p>
         </div>
-      )}
+
+        {/* Right Side: Cover Image */}
+        {blog.coverImage && (
+          <div className="w-full lg:w-1/2">
+            <div className="relative w-full aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl border border-white/40 max-w-2xl mx-auto">
+              <Image
+                src={blog.coverImage.image}
+                alt={blog.title}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          </div>
+        )}
+      </header>
 
 
       {/* === GRID LAYOUT FOR CONTENT & TOC === */}
@@ -90,21 +117,21 @@ export default async function BlogDetail({
             components={{
               // YAHAN DHYAN DEIN: Headings me id add kar diya hai taaki scroll kaam kare
               h2({ children }) {
-                const id = slugify(children?.toString() || "");
+                const id = slugify(extractChildrenText(children).trim());
                 return (
                   <h2
                     id={id}
-                    className="text-3xl font-bold mt-10 mb-4 pb-2 border-b border-zinc-200 dark:border-zinc-800 scroll-mt-28">
+                    className="text-3xl font-bold mt-10 mb-4 pb-2 border-b border-zinc-200 dark:border-zinc-800 scroll-mt-[15vh]">
                     {children}
                   </h2>
                 );
               },
               h3({ children }) {
-                const id = slugify(children?.toString() || "");
+                const id = slugify(extractChildrenText(children).trim());
                 return (
                   <h3
                     id={id}
-                    className="text-2xl font-semibold mt-8 mb-4 scroll-mt-28">
+                    className="text-2xl font-semibold mt-8 mb-4 scroll-mt-[15vh]">
                     {children}
                   </h3>
                 );
